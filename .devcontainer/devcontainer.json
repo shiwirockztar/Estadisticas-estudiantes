@@ -19,7 +19,8 @@
         "rapidapi.vscode-rapidapi-client",
         "rapidapi.vscode-services",
         //"tabnine.tabnine-vscode",
-        "usernamehw.errorlens"
+        "usernamehw.errorlens",
+        "rainbowCsv"
       ]
     }
   },
