@@ -3,6 +3,39 @@
 Proyecto para calcular y analizar estadísticas de los estudiantes
 del primer semestre en la Universidad de Antioquia.
 
+<p align="center">
+  <a title="Twitter: Jose_leonardo" href="https://www.linkedin.com/in/jose-leonardo-poveda/">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+  </a> 
+  <br />
+  <a title="Github: Sponsors" href="https://github.com/shiwirockztar">
+    <img src="https://img.shields.io/twitter/url?color=032f62&label=Github%20%40Shiwirockztar&logo=github&logoColor=FFFFFF&style=flat-square&url=https%3A%2F%2Fgithub.com%2Fsponsors%2FShiwirockztar">
+  </a>
+</p>
+
+## 📂 Estructura de carpetas
+
+```
+Estadisticas-estudiantes/
+│
+├── Guía Lab 7 - Estadísticas estudiantes.pdf  # Practica.
+├── Readme  📝                                 # Project information and instructions.
+│
+├── main.py
+│
+├── modules/
+│   ├── estudiantes.py
+│   ├── archivo.py
+│   ├── plots.py
+│   └── __init__.py
+│
+└── database
+    ├── hist_matriculados.csv 📜           # Csv.
+    └── notas_estudiantes.csv 📜           # Csv.
+```
+
+
+
 **Descripción**
 - **Propósito:** Generar estadísticas (promedios, matrículas, cursos cancelados, etc.)
 	sobre los estudiantes del primer semestre a partir de las listas y la matriz
@@ -14,7 +47,7 @@ del primer semestre en la Universidad de Antioquia.
 	los códigos de los cursos; la matriz contiene las notas de cada estudiante en
 	cada curso.
 
-**Estructura de datos (modelo de la práctica)**
+**  📐 Estructura de datos (modelo de la práctica)**
 - **Lista de estudiantes:** lista unidimensional con la identificación (documento)
 	de cada estudiante. El orden posicional relaciona al estudiante i con la fila i
 	de la matriz de notas.
@@ -42,7 +75,7 @@ funciones propias para administrar las listas/operaciones requeridas.
 - `modules/plots.py`: funciones para graficar distribuciones de notas, promedios,
 	histogramas, etc. (siempre opcional; el análisis puede realizarse sin gráficos).
 
-**Requisitos y ejecución**
+**  ✅ Requisitos y ejecución**
 - Requisitos: Python 3.8+ (no se requiere librería externa para la versión básica).
 - Ejecutar el programa:
 
@@ -68,15 +101,13 @@ python3 main.py
 	- En este ejemplo, `notas[0][1] == -2` significa que el estudiante `1001`
 		no se matriculó en `PROG101`.
 
-**Qué se espera entregar**
+**  ⛽️ Qué se espera entregar**
 - Código que lea los CSV y construya las estructuras (listas + matriz).
 - Implementaciones de funciones para calcular estadísticas básicas y
 	para administrar las listas (búsqueda, ordenamiento, filtrado).
 - Documentación mínima en `README.md` y comentarios claros en los módulos.
 
-Si quieres, puedo:
-- generar ejemplos de funciones para leer `database/notas_estudiantes.csv` y
-	construir las estructuras, o
-- implementar cálculos estadísticos (promedios, número de cancelaciones, etc.),
-	o
-- crear gráficos básicos en `modules/plots.py`.
+## Happy Code
+
+Created by Jose Leonardo P Poveda, lot of ❤️ and a few ☕️
+

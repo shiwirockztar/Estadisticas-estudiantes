@@ -1,4 +1,8 @@
-# 1. Mostrar menú principal al usuario
+# Implemente aquí los menús y el programa principal que invoca las funciones de los otros módulos
+
+import modules.functions as func
+
+seleccion = func.menu() # 1. Mostrar menú principal al usuario
 
 while True:
 
