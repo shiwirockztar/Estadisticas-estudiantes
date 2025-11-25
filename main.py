@@ -7,7 +7,13 @@ seleccion = func.menu() # 1. Mostrar menú principal al usuario
 while True:
 
     # 2. Cargar datos desde archivo
-    #    Esta opción permite leer el archivo database.csv
+    if seleccion == "1": #    Esta opción permite leer el archivo database.csv
+        hist_matriculados = func.cargar_datos_desde_archivo("./database/hist_matriculados.csv")
+        notas_estudiantes = func.cargar_datos_desde_archivo("./database/notas_estudiantes.csv")
+        print("Datos cargados exitosamente.")       
+        print(hist_matriculados)
+        print(notas_estudiantes)
+    #    El usuario debe seleccionar esta opción para leer
     #    y cargar las estructuras de datos del programa.
 
     # 3. Eliminar estudiante

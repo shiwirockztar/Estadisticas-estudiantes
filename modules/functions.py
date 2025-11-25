@@ -1,18 +1,5 @@
 # Módulo que contiene las funciones relacionadas con el procesamiento de datos estadísticos de estudiantes
-
-
-
-def cargar_datos_desde_archivo(nombre_archivo):
-    '''
-    Carga los datos desde un archivo CSV y retorna las estructuras de datos necesarias.
-    Parámetros:
-        nombre_archivo (str): Nombre del archivo CSV a cargar.
-    Retorna:
-        dict: Diccionario con los datos de estudiantes y sus notas.
-    '''
-    datos = {}
-    # Lógica para leer el archivo CSV y cargar los datos en el diccionario
-    return datos
+import csv
 
 def menu():
     '''
@@ -29,3 +16,22 @@ def menu():
     print("6. Salir del programa")
     seleccion = input("Seleccione una opción: ")
     return seleccion
+
+def cargar_notas(path = 'notas_estudiantes.csv'):
+    '''
+    Calcula el promedio de notas para cada estudiante.
+    Parámetros:
+        notas_estudiantes (list): Lista de diccionarios con las notas de los estudiantes.
+    Retorna:
+        dict: Diccionario con el promedio de notas por estudiante.
+    '''
+    datos = {}
+    with open(path,"r") as file:
+        file.readline()  # Saltar la cabecera
+        usuarios = file.readline().strip().split(",") # Leer la segunda línea con los id de usuarios
+        dic_usuarios = {usuario: [] for usuario in usuarios} # Crear diccionario con listas vacías
+        for index, line in enumerate(file):
+            id = list(dic_usuarios.keys())[index]
+            dic_usuarios[id] = line.strip().split(",") # Asignar las notas a cada usuario como lista
+    print(dic_usuarios)
+    return datos
