@@ -50,4 +50,20 @@ def eliminar_estudiante(notas_estudiantes, id_estudiante):
     if id_estudiante in notas_estudiantes:
         del notas_estudiantes[id_estudiante]
         print(f"Estudiante con ID {id_estudiante} eliminado.")
-    #return nuevas_notas
+
+def mayor_nota_estudiante(notas_estudiantes, id_estudiante):    
+    '''
+    Encuentra la mayor nota de un estudiante y el código del curso donde la obtuvo.
+    Parámetros:
+        notas_estudiantes (dict): Diccionario con las notas de los estudiantes.
+        id_estudiante (str): ID del estudiante a consultar.
+    Retorna:
+        tuple: Mayor nota y código del curso donde la obtuvo.
+    '''
+    if id_estudiante in notas_estudiantes:
+        notas = notas_estudiantes[id_estudiante]
+        max_nota = max(float(nota) for nota in notas if nota)
+        curso_index = notas.index(str(max_nota))
+        return max_nota, curso_index
+    else:
+        return None, None
