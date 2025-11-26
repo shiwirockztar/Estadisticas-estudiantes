@@ -1,5 +1,6 @@
 # Módulo que contiene las funciones relacionadas con el procesamiento de datos estadísticos de estudiantes
 import csv
+import copy
 
 def menu():
     '''
@@ -33,5 +34,20 @@ def cargar_notas(path = 'notas_estudiantes.csv'):
         for index, line in enumerate(file):
             id = list(dic_usuarios.keys())[index]
             dic_usuarios[id] = line.strip().split(",") # Asignar las notas a cada usuario como lista
-    print(dic_usuarios)
-    return datos
+    #print(dic_usuarios)
+    return dic_usuarios
+
+def eliminar_estudiante(notas_estudiantes, id_estudiante):
+    '''
+    Elimina un estudiante del diccionario de notas.
+    Parámetros:
+        notas_estudiantes (dict): Diccionario con las notas de los estudiantes.
+        id_estudiante (str): ID del estudiante a eliminar.
+    Retorna:
+        dict: Diccionario actualizado sin el estudiante eliminado.
+    '''
+    #nuevas_notas = copy.deepcopy(notas_estudiantes)
+    if id_estudiante in notas_estudiantes:
+        del notas_estudiantes[id_estudiante]
+        print(f"Estudiante con ID {id_estudiante} eliminado.")
+    #return nuevas_notas

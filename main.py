@@ -1,21 +1,16 @@
 # Implemente aquí los menús y el programa principal que invoca las funciones de los otros módulos
-
 import modules.functions as func
 
-seleccion = func.menu() # 1. Mostrar menú principal al usuario
+#seleccion = func.menu() # 1. Mostrar menú principal al usuario
 
 while True:
 
     # 2. Cargar datos desde archivo
-    if seleccion == "1": #    Esta opción permite leer el archivo database.csv
-        notas_estudiantes = func.cargar_notas("./database/notas_estudiantes.csv")
-        print("Datos cargados exitosamente.")       
-        print(notas_estudiantes)
+    #    Esta opción permite leer el archivo database.csv
     #    El usuario debe seleccionar esta opción para leer
     #    y cargar las estructuras de datos del programa.
 
     # 3. Eliminar estudiante
-    #    El usuario ingresa un número de documento
     #    y se elimina al estudiante y sus notas.
 
     # 4. Mayor nota de estudiante
@@ -37,14 +32,24 @@ while True:
 
     seleccion = ""  # Variable para recibir opción del usuario
 
+    seleccion = func.menu() # 1. Mostrar menú 
+
     # 8. Verificar qué opción eligió el usuario y ejecutar su bloque correspondiente
     if seleccion == "1":
         # a. Llamar funcionalidad de cargar archivo
+        notas_estudiantes = func.cargar_notas("./database/notas_estudiantes.csv")
+        print("Datos cargados exitosamente.")
+        for estudiante, notas in notas_estudiantes.items():
+            print(f"Estudiante ID: {estudiante}, Notas: {notas}")
         pass
 
     elif seleccion == "2":
         # a. Solicitar documento
+        documento = input("Ingrese el número de documento del estudiante a eliminar: ")
         # b. Eliminar estudiante y sus notas
+        func.eliminar_estudiante(notas_estudiantes, documento) #    El usuario ingresa un número de documento
+        for estudiante, notas in notas_estudiantes.items():
+            print(f"Estudiante ID: {estudiante}, Notas: {notas}")
         pass
 
     elif seleccion == "3":
