@@ -54,13 +54,24 @@ while True:
 
     elif seleccion == "3":
         # a. Solicitar identificación del estudiante
+        documento = input("Ingrese el número de documento del estudiante a eliminar: ")
         # b. Buscar su mayor nota
+        mayor_nota = func.mayor_nota_estudiante(notas_estudiantes, documento)
         # c. Mostrar resultado al usuario
+        if mayor_nota[0] is not None:
+            print(f"La mayor nota del estudiante {documento} es: {mayor_nota[0]} en el Curso {mayor_nota[1]+1}")
+        else:
+            print(f"No se encontró al estudiante con ID {documento}.")
         pass
 
     elif seleccion == "4":
         # a. Aplicar burbuja a los promedios
+        notas_promedio = func.estudiante_promedio(notas_estudiantes)
+        ordenados_burbuja = func.ordenar_promedios_burbuja(notas_promedio)
         # b. Mostrar lista ordenada
+        print("Estudiantes ordenados por promedio (Burbuja):")
+        for estudiante, promedio in ordenados_burbuja:
+            print(f"Estudiante ID: {estudiante}, Promedio: {promedio}")
         pass
 
     elif seleccion == "5":
