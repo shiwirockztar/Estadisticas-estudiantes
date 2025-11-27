@@ -8,8 +8,15 @@ for estudiante, notas in notas_dict.items():
 
 print(notas_dict)
 
-promedios = func.estudiante_promedio(notas_dict)
-ordenados_burbuja = func.ordenar_promedios_burbuja(promedios)
-print(ordenados_burbuja)
-#for estudiante, promedio in ordenados_burbuja:
-#    print(f"Estudiante ID: {estudiante}, Promedio: {promedio}")
+ordenados_burbuja = func.ordenar_promedios_burbuja(notas_dict)
+print("Estudiantes ordenados por promedio (Burbuja):")
+#print(ordenados_burbuja)
+for estudiante, promedio, _ in ordenados_burbuja:
+    print(f"Estudiante ID: {estudiante}, Promedio: {promedio}")
+
+#cantidades_cursos = func.promedio_cursos_seleccion(notas_dict)
+ordenados_seleccion = func.ordenar_materias_seleccion(notas_dict)
+print("Estudiantes ordenados por cantidad de cursos (Selección):")
+for estudiante, _, cantidad in ordenados_seleccion:
+    print(f"Estudiante ID: {estudiante}, Cantidad de cursos: {cantidad}")
+#print(ordenados_seleccion)

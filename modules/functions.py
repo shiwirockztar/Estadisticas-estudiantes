@@ -70,7 +70,7 @@ def mayor_nota_estudiante(notas_estudiantes, id_estudiante):
     else:
         return None, None
     
-def estudiante_promedio(notas_estudiantes):
+def listar_promedio(notas_estudiantes):
     '''
     Funcion que calcula el promedio de notas para cada estudiante.
     Parámetros:
@@ -78,14 +78,18 @@ def estudiante_promedio(notas_estudiantes):
     Retorna:
         list: Lista de tuplas con ID del estudiante y su promedio.
     '''
-    promedios = []
+    data = []
     for id_estudiante, notas in notas_estudiantes.items():
-        suma_notas = sum([float(nota) for nota in notas if nota])
+        #suma_notas = sum([float(nota) for nota in notas if nota])
+        for nota in notas:
+            if nota == "" or nota == "-1":
+                notas.remove(nota)
+        suma_notas = sum(map(float, notas))
         promedio = suma_notas / len(notas)
-        promedios.append([id_estudiante, promedio])
-    return promedios
+        data.append([id_estudiante, promedio, len(notas)])
+    return data
 
-def ordenar_promedios_burbuja(promedios):
+def ordenar_promedios_burbuja(notas_estudiantes):
     '''
     Ordena los estudiantes según su promedio de notas usando el algoritmo de burbuja.
     Parámetros:
@@ -93,37 +97,18 @@ def ordenar_promedios_burbuja(promedios):
     Retorna:
         list: Lista de tuplas con ID del estudiante y su promedio, ordenada de mayor a menor promedio.
     '''
-    n = len(promedios)
-    for i in range(n):
-        for j in range(0, n-i-1):
-            if promedios[j][1] < promedios[j+1][1]:
-                promedios[j], promedios[j+1] = promedios[j+1], promedios[j]
-    return promedios
 
-def ordenar_promedios_burbujaT(notas_estudiantes):
-    '''
-    Ordena los estudiantes según su promedio de notas usando el algoritmo de burbuja.
-    Parámetros:
-        notas_estudiantes (dict): Diccionario con las notas de los estudiantes.
-    Retorna:
-        list: Lista de tuplas con ID del estudiante y su promedio, ordenada de mayor a menor promedio.
-    '''
-    promedios = []
-    for id_estudiante, notas in notas_estudiantes.items():
-        notas_float = [float(nota) for nota in notas if nota]
-        promedio = sum(notas_float) / len(notas_float) if notas_float else 0
-        promedios.append([id_estudiante, promedio])
-    
+    data = listar_promedio(notas_estudiantes)
     # Algoritmo de burbuja
-    n = len(promedios)
+    n = len(data)
     for i in range(n):
         for j in range(0, n-i-1):
-            if promedios[j][1] < promedios[j+1][1]:
-                promedios[j], promedios[j+1] = promedios[j+1], promedios[j]
-    
-    return promedios
+            if data[j][1] < data[j+1][1]:
+                data[j], data[j+1] = data[j+1], data[j]
+    return data
 
-def promedio_cursos_seleccion(notas_estudiantes):
+
+def ordenar_materias_seleccion(notas_estudiantes):
     '''
     Ordena los estudiantes según la cantidad de cursos usando el algoritmo de selección.
     Parámetros:
@@ -131,18 +116,15 @@ def promedio_cursos_seleccion(notas_estudiantes):
     Retorna:
         list: Lista de tuplas con ID del estudiante y cantidad de cursos, ordenada de mayor a menor cantidad.
     '''
-    cantidades = []
-    for id_estudiante, notas in notas_estudiantes.items():
-        cantidad = len([nota for nota in notas if nota])
-        cantidades.append((id_estudiante, cantidad))
     
+    data = listar_promedio(notas_estudiantes)
     # Algoritmo de selección
-    n = len(cantidades)
+    n = len(data)
     for i in range(n):
         max_idx = i
         for j in range(i+1, n):
-            if cantidades[j][1] > cantidades[max_idx][1]:
+            if data[j][2] > data[max_idx][2]:
                 max_idx = j
-        cantidades[i], cantidades[max_idx] = cantidades[max_idx], cantidades[i]
+        data[i], data[max_idx] = data[max_idx], data[i]
     
-    return cantidades   
+    return data   
