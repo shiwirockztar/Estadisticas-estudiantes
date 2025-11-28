@@ -1,5 +1,6 @@
 # Implemente aquí los menús y el programa principal que invoca las funciones de los otros módulos
 import modules.functions as func
+import time
 
 #seleccion = func.menu() # 1. Mostrar menú principal al usuario
 
@@ -32,7 +33,10 @@ while True:
 
     seleccion = ""  # Variable para recibir opción del usuario
 
+    time
+    func.limpiar_pantalla()  # Limpiar pantalla antes de mostrar el menú
     seleccion = func.menu() # 1. Mostrar menú 
+    notas_estudiantes = {}  # Diccionario para almacenar las notas de los estudiantes
 
     # 8. Verificar qué opción eligió el usuario y ejecutar su bloque correspondiente
     if seleccion == "1":
@@ -44,12 +48,16 @@ while True:
         pass
 
     elif seleccion == "2":
+        if notas_estudiantes == {}:
+            print("No se han cargado los datos. Por favor, cargue los datos primero.")
+            continue
         # a. Solicitar documento
         documento = input("Ingrese el número de documento del estudiante a eliminar: ")
         # b. Eliminar estudiante y sus notas
         func.eliminar_estudiante(notas_estudiantes, documento) #    El usuario ingresa un número de documento
         for estudiante, notas in notas_estudiantes.items():
             print(f"Estudiante ID: {estudiante}, Notas: {notas}")
+        assert notas_estudiantes == {}, "No se han cargado los datos correctamente, vuelva a cargarlo e intentalo nuevamente."
         pass
 
     elif seleccion == "3":
