@@ -111,3 +111,135 @@ python3 main.py
 
 Created by Jose Leonardo P Poveda, lot of ❤️ and a few ☕️
 
+Claro, vamos a desglosar cómo funciona el **algoritmo de selección** (Selection Sort) para ordenar la lista de datos **paso a paso**, analizando los ciclos de la ejecución. En este caso, vamos a ordenar los datos según el **segundo valor** de cada sublista (es decir, los números decimales, como `2.9000000000000004`).
+
+# Algoritmo ordenamiento por seleccion
+
+### Datos Iniciales
+
+La lista de datos es la siguiente:
+
+```python
+data = [
+    ['1033492448', 2.9000000000000004, 4],
+    ['1032090603', 3.1500000000000004, 4],
+    ['1002152167', 2.46, 5],
+    ['1028854736', 2.54, 5],
+    ['1014191590', 3.7399999999999998, 5],
+    ['1024351175', 2.5799999999999996, 5],
+    ['1036351870', 3.66, 5]
+]
+```
+
+### Ciclo 1: Seleccionar el valor más pequeño en todo el arreglo
+
+1. En la primera iteración, **i = 0** (empezamos con el primer elemento, el que tiene índice 0).
+2. Buscamos el valor más pequeño entre todos los elementos a partir de la posición 0 (es decir, en toda la lista).
+
+#### Sub-ciclo 1.1: Buscar el mínimo
+
+* Comparamos `2.9000000000000004` (índice 0) con `3.1500000000000004` (índice 1). El mínimo sigue siendo `2.9000000000000004`.
+* Comparamos `2.9000000000000004` (índice 0) con `2.46` (índice 2). El mínimo ahora es `2.46`.
+* Comparamos `2.46` (índice 2) con `2.54` (índice 3). El mínimo sigue siendo `2.46`.
+* Comparamos `2.46` (índice 2) con `3.7399999999999998` (índice 4). El mínimo sigue siendo `2.46`.
+* Comparamos `2.46` (índice 2) con `2.5799999999999996` (índice 5). El mínimo sigue siendo `2.46`.
+* Comparamos `2.46` (índice 2) con `3.66` (índice 6). El mínimo sigue siendo `2.46`.
+
+#### Intercambio
+
+* El mínimo encontrado es `2.46` (índice 2).
+* Intercambiamos `2.9000000000000004` (índice 0) con `2.46` (índice 2).
+
+Resultado después del primer ciclo:
+
+```python
+data = [
+    ['1002152167', 2.46, 5],  # Intercambiado
+    ['1032090603', 3.1500000000000004, 4],
+    ['1033492448', 2.9000000000000004, 4],  # Intercambiado
+    ['1028854736', 2.54, 5],
+    ['1014191590', 3.7399999999999998, 5],
+    ['1024351175', 2.5799999999999996, 5],
+    ['1036351870', 3.66, 5]
+]
+```
+
+### Ciclo 2: Seleccionar el valor más pequeño en el subarreglo restante
+
+Ahora, vamos a ordenar el subarreglo restante (después de la primera posición):
+
+3. En la segunda iteración, **i = 1** (empezamos con el segundo elemento, el que tiene índice 1).
+4. Buscamos el valor más pequeño en el subarreglo que empieza en el índice 1.
+
+#### Sub-ciclo 2.1: Buscar el mínimo
+
+* Comparamos `3.1500000000000004` (índice 1) con `2.9000000000000004` (índice 2). El mínimo sigue siendo `2.9000000000000004`.
+* Comparamos `2.9000000000000004` (índice 2) con `2.54` (índice 3). El mínimo ahora es `2.54`.
+* Comparamos `2.54` (índice 3) con `3.7399999999999998` (índice 4). El mínimo sigue siendo `2.54`.
+* Comparamos `2.54` (índice 3) con `2.5799999999999996` (índice 5). El mínimo sigue siendo `2.54`.
+* Comparamos `2.54` (índice 3) con `3.66` (índice 6). El mínimo sigue siendo `2.54`.
+
+#### Intercambio
+
+* El mínimo encontrado es `2.54` (índice 3).
+* Intercambiamos `3.1500000000000004` (índice 1) con `2.54` (índice 3).
+
+Resultado después del segundo ciclo:
+
+```python
+data = [
+    ['1002152167', 2.46, 5], 
+    ['1028854736', 2.54, 5],  # Intercambiado
+    ['1033492448', 2.9000000000000004, 4],
+    ['1032090603', 3.1500000000000004, 4],  # Intercambiado
+    ['1014191590', 3.7399999999999998, 5],
+    ['1024351175', 2.5799999999999996, 5],
+    ['1036351870', 3.66, 5]
+]
+```
+
+### Ciclo 3: Seleccionar el valor más pequeño en el subarreglo restante
+
+5. En la tercera iteración, **i = 2** (empezamos con el tercer elemento, el que tiene índice 2).
+6. Buscamos el valor más pequeño en el subarreglo que empieza en el índice 2.
+
+#### Sub-ciclo 3.1: Buscar el mínimo
+
+* Comparamos `2.9000000000000004` (índice 2) con `3.1500000000000004` (índice 3). El mínimo sigue siendo `2.9000000000000004`.
+* Comparamos `2.9000000000000004` (índice 2) con `3.7399999999999998` (índice 4). El mínimo sigue siendo `2.9000000000000004`.
+* Comparamos `2.9000000000000004` (índice 2) con `2.5799999999999996` (índice 5). El mínimo ahora es `2.5799999999999996`.
+* Comparamos `2.5799999999999996` (índice 5) con `3.66` (índice 6). El mínimo sigue siendo `2.5799999999999996`.
+
+#### Intercambio
+
+* El mínimo encontrado es `2.5799999999999996` (índice 5).
+* Intercambiamos `2.9000000000000004` (índice 2) con `2.5799999999999996` (índice 5).
+
+Resultado después del tercer ciclo:
+
+```python
+data = [
+    ['1002152167', 2.46, 5], 
+    ['1028854736', 2.54, 5], 
+    ['1024351175', 2.5799999999999996, 5],  # Intercambiado
+    ['1032090603', 3.1500000000000004, 4], 
+    ['1033492448', 2.9000000000000004, 4],  # Intercambiado
+    ['1014191590', 3.7399999999999998, 5],
+    ['1036351870', 3.66, 5]
+]
+```
+
+### Ciclo 4: Seleccionar el valor más pequeño en el subarreglo restante
+
+7. En la cuarta iteración, **i = 3** (empezamos con el cuarto elemento, el que tiene índice 3).
+8. Buscamos el valor más pequeño en el subarreglo que empieza en el índice 3.
+
+#### Sub-ciclo 4.1: Buscar el mínimo
+
+* Comparamos `3.1500000000000004` (índice 3) con `2.9000000000000004` (índice 4). El mínimo ahora es `2.9000000000000004`.
+* Comparamos `2.9000000000000004` (índice 4) con `3.7399999999999998` (índice 5). El mínimo sigue siendo `2.9000000000000004`.
+* Comparamos `2.9000000000000004` (índice 4) con `3.66` (índice 6). El mínimo sigue siendo `2.9000000000000004`.
+
+#### Intercambio
+
+* El mínimo encontrado es `2.9000000000000004` (índice 4), que ya está en su lugar. No

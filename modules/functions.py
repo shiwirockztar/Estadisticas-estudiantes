@@ -24,7 +24,7 @@ def menu():
     seleccion = input("Seleccione una opción: ")
     return seleccion
 
-def cargar_notas(path = 'notas_estudiantes.csv'):
+def cargar_notas(path = './database/notas_estudiantes.csv'):
     '''
     Calcula el promedio de notas para cada estudiante.
     Parámetros:
@@ -74,7 +74,7 @@ def mayor_nota_estudiante(notas_estudiantes, id_estudiante):
         curso_index = notas.index(str(max_nota))
         return max_nota, curso_index
     else:
-        return None, None
+        return None, None , None
     
 def listar_promedio(notas_estudiantes):
     '''
@@ -107,10 +107,11 @@ def ordenar_promedios_burbuja(notas_estudiantes):
     data = listar_promedio(notas_estudiantes)
     # Algoritmo de burbuja
     n = len(data)
+    #print(data)
     for i in range(n):
         for j in range(0, n-i-1):
-            if data[j][1] < data[j+1][1]:
-                data[j], data[j+1] = data[j+1], data[j]
+            if data[j][1] < data[j+1][1]: # comparando promedios del 1 y el segundo elemento de la tupla en los elementos de promedio
+                data[j], data[j+1] = data[j+1], data[j] # intercambiar si el elemento encontrado es menor
     return data
 
 
@@ -124,13 +125,18 @@ def ordenar_materias_seleccion(notas_estudiantes):
     '''
     
     data = listar_promedio(notas_estudiantes)
+    
     # Algoritmo de selección
     n = len(data)
+
     for i in range(n):
-        max_idx = i
+        ind = i # índice del elemento 
         for j in range(i+1, n):
-            if data[j][2] > data[max_idx][2]:
-                max_idx = j
-        data[i], data[max_idx] = data[max_idx], data[i]
+            print("ciclo ",i,"Comparando:",data[ind], "y", data[j])
+            if data[j][2] > data[ind][2]:
+                ind = j
+            #print("INTERCAMBIO:",data[i],"y",data[ind])
+        data[i], data[ind] = data[ind], data[i]
+        #print("Resultado parcial:",data)
     
     return data   
