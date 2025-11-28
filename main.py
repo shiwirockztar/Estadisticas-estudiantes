@@ -33,7 +33,7 @@ while True:
 
     seleccion = ""  # Variable para recibir opción del usuario
 
-    time
+    time.sleep(2.5)
     func.limpiar_pantalla()  # Limpiar pantalla antes de mostrar el menú
     seleccion = func.menu() # 1. Mostrar menú 
     notas_estudiantes = {}  # Diccionario para almacenar las notas de los estudiantes
