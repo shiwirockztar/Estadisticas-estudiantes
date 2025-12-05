@@ -3,7 +3,7 @@ import modules.functions as func
 import time
 
 #seleccion = func.menu() # 1. Mostrar menú principal al usuario
-notas_estudiantes = func.cargar_notas()  # Diccionario para almacenar las notas de los estudiantes
+estudiantes, cursos, notas = func.cargar_notas()  # Diccionario para almacenar las notas de los estudiantes
 
 while True:
 
@@ -43,30 +43,29 @@ while True:
         # a. Llamar funcionalidad de cargar archivo
         path = input("Ingrese la ruta del archivo de notas (o presione Enter para usar la ruta por defecto): ")
         if path.strip() == "":
-            notas_estudiantes = func.cargar_notas()
+            estudiantes, cursos, notas = func.cargar_notas()
         else:
-            notas_estudiantes = func.cargar_notas(path)
+            estudiantes, cursos, notas = func.cargar_notas(path)
         print("Datos cargados exitosamente.")
-        for estudiante, notas in notas_estudiantes.items():
-            print(f"Estudiante ID: {estudiante}, Notas: {notas}")
         pass
 
     elif seleccion == "2":
         # a. Solicitar documento
+        print("Estudiantes actuales:", estudiantes)
         documento = input("Ingrese el número de documento del estudiante a eliminar: ")
         # b. Eliminar estudiante y sus notas
-        func.eliminar_estudiante(notas_estudiantes, documento) #    El usuario ingresa un número de documento
-        for estudiante, notas in notas_estudiantes.items():
-            print(f"Estudiante ID: {estudiante}, Notas: {notas}")
+        func.eliminar_estudiante(estudiantes, notas, documento) #    El usuario ingresa un número de documento
+        for estudiante, notas_estudiante in zip(estudiantes, notas):
+            print(f"Estudiante ID: {estudiante}, Notas: {notas_estudiante}")
         #assert notas_estudiantes == {}, "No se han cargado los datos correctamente, vuelva a cargarlo e intentalo nuevamente."
         pass
 
     elif seleccion == "3":
         # a. Solicitar identificación del estudiante
+        print("Estudiantes actuales:", estudiantes)
         documento = input("Ingrese el número de documento del estudiante a comparar : ")
         # b. Buscar su mayor nota
-        mayor_nota = func.mayor_nota_estudiante(notas_estudiantes, documento)
-        print("notas estudiantes : ",notas_estudiantes)
+        mayor_nota = func.mayor_nota_estudiante(estudiantes, notas, documento)  
         # c. Mostrar resultado al usuario
         if mayor_nota[0] is not None:
             print(f"La mayor nota del estudiante {documento} es: {mayor_nota[0]} en el Curso {mayor_nota[1]+1}")
@@ -76,20 +75,17 @@ while True:
 
     elif seleccion == "4":
         # a. Aplicar burbuja a los promedios
-        ordenados_burbuja = func.ordenar_promedios_burbuja(notas_estudiantes)
+        ordenados_burbuja = func.ordenar_estudiantes_burbuja(estudiantes, notas)
         # b. Mostrar lista ordenada
         print("Estudiantes ordenados por promedio (Burbuja):")
-        for estudiante, promedio, x in ordenados_burbuja:
-            print(f"Estudiante ID: {estudiante}, Promedio: {promedio}")
+        for estudiante, promedio in ordenados_burbuja:
+            print(f"Estudiante ID: {estudiante}, Promedio: {promedio}") 
         pass
 
     elif seleccion == "5":
         # a. Aplicar selección según cursos matriculados
-        ordenados_seleccion = func.ordenar_materias_seleccion(notas_estudiantes)
+        func.ordenar_materias_seleccion(estudiantes, notas)
         # b. Mostrar resultado
-        print("Estudiantes ordenados por cantidad de cursos (Selección):")
-        for estudiante, promedio, cantidad_cursos in ordenados_seleccion:
-            print(f"Estudiante ID: {estudiante}, Cantidad de cursos: {cantidad_cursos}")
         pass
 
     elif seleccion == "6":

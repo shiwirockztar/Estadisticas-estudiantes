@@ -26,117 +26,146 @@ def menu():
 
 def cargar_notas(path = './database/notas_estudiantes.csv'):
     '''
-    Calcula el promedio de notas para cada estudiante.
+    Carga las notas de los estudiantes desde un archivo CSV.
     Parámetros:
-        notas_estudiantes (list): Lista de diccionarios con las notas de los estudiantes.
+        path (str): Ruta al archivo CSV con las notas de los estudiantes.
     Retorna:
-        dict: Diccionario con el promedio de notas por estudiante.
+        tuple: Tupla con tres elementos:
+            - lista de IDs de estudiantes (list)
+            - lista de códigos de cursos (list)
+            - lista de listas con las notas de cada estudiante (list)       
     '''
-    datos = {}
+    estudiantes = []
+    cursos = []
+    notas = []
     with open(path,"r") as file:
-        file.readline()  # Saltar la cabecera
-        usuarios = file.readline().strip().split(",") # Leer la segunda línea con los id de usuarios
-        dic_usuarios = {usuario: [] for usuario in usuarios} # Crear diccionario con listas vacías
-        for index, line in enumerate(file):
-            id = list(dic_usuarios.keys())[index]
-            dic_usuarios[id] = line.strip().split(",") # Asignar las notas a cada usuario como lista
-    #print(dic_usuarios)
-    return dic_usuarios
+        cursos = file.readline().strip().split(",")  # Saltar la cabecera
+        estudiantes = file.readline().strip().split(",") # Leer la segunda línea con los id de usuarios
+        for line in file:
+            nota = line.strip().split(",") # Asignar las notas a cada usuario como lista
+            notas.append(nota)
 
-def eliminar_estudiante(notas_estudiantes, id_estudiante):
+    return estudiantes, cursos, notas
+
+def eliminar_estudiante(estudiantes, notas, id_estudiante):
     '''
-    Elimina un estudiante del diccionario de notas.
+    Elimina un estudiante y sus notas asociadas.
     Parámetros:
-        notas_estudiantes (dict): Diccionario con las notas de los estudiantes.
+        estudiantes (list): Lista de IDs de estudiantes.
+        notas (list): Lista de listas con las notas de cada estudiante.
         id_estudiante (str): ID del estudiante a eliminar.
     Retorna:
-        dict: Diccionario actualizado sin el estudiante eliminado.
+        None    
     '''
-    #nuevas_notas = copy.deepcopy(notas_estudiantes)
-    if id_estudiante in notas_estudiantes:
-        del notas_estudiantes[id_estudiante]
+    if id_estudiante in estudiantes:
+        index = estudiantes.index(id_estudiante)
+        estudiantes.pop(index)
+        notas.pop(index)
         print(f"Estudiante con ID {id_estudiante} eliminado.")
     else:
         print(f"No se encontró al estudiante con ID {id_estudiante}.")
 
-def mayor_nota_estudiante(notas_estudiantes, id_estudiante):    
+
+def mayor_nota_estudiante(estudiantes, notas, id_estudiante):    
     '''
     Encuentra la mayor nota de un estudiante y el código del curso donde la obtuvo.
     Parámetros:
-        notas_estudiantes (dict): Diccionario con las notas de los estudiantes.
+        estudiantes (list): Lista de IDs de estudiantes.
+        notas (list): Lista de listas con las notas de cada estudiante.
         id_estudiante (str): ID del estudiante a consultar.
     Retorna:
         tuple: Mayor nota y código del curso donde la obtuvo.
     '''
-    if id_estudiante in notas_estudiantes:
-        notas = notas_estudiantes[id_estudiante]
-        max_nota = max(float(nota) for nota in notas if nota)
-        curso_index = notas.index(str(max_nota))
+    if id_estudiante in estudiantes:
+        index = estudiantes.index(id_estudiante)
+        notas_estudiante = notas[index]
+        max_nota = max(float(nota) for nota in notas_estudiante if nota)
+        curso_index = notas_estudiante.index(str(max_nota))
         return max_nota, curso_index
     else:
-        return None, None , None
+        return None, None
     
-def listar_promedio(notas_estudiantes):
+def obtener_promedios_materias(notas):
     '''
-    Funcion que calcula el promedio de notas para cada estudiante.
+    Calcula el promedio de notas para cada estudiante.
     Parámetros:
-        notas_estudiantes (dict): Diccionario con las notas de los estudiantes.
+        notas (list): Lista de listas con las notas de cada estudiante.
     Retorna:
-        list: Lista de tuplas con ID del estudiante y su promedio.
+        list: Lista con los promedios de cada estudiante.
     '''
-    data = []
-    for id_estudiante, notas in notas_estudiantes.items():
-        #suma_notas = sum([float(nota) for nota in notas if nota])
-        for nota in notas:
-            if nota == "" or nota == "-1":
-                notas.remove(nota)
-        suma_notas = sum(map(float, notas))
-        promedio = suma_notas / len(notas)
-        data.append([id_estudiante, promedio, len(notas)])
-    return data
+    promedios =[]
+    materias_cursadas = []
+    for nota_alumno in notas:
+        promedio_alumno = 0
+        suma_notas = 0
+        contador_notas = 0
+        for nota in nota_alumno:
+            if nota != "-1":
+                contador_notas += 1
+                suma_notas += float(nota)
+        if contador_notas > 0:
+            promedio_alumno = suma_notas / contador_notas
+        materias_cursadas.append(contador_notas)    
+        promedios.append(promedio_alumno)
+    return promedios, materias_cursadas
 
-def ordenar_promedios_burbuja(notas_estudiantes):
+def sort_bubble(promedios):
     '''
-    Ordena los estudiantes según su promedio de notas usando el algoritmo de burbuja.
+    Ordena los promedios de los estudiantes usando el algoritmo de burbuja.
     Parámetros:
-        promedios (list): Lista de tuplas con ID del estudiante y su promedio.
+        promedios (list): Lista con los promedios de cada estudiante.
     Retorna:
-        list: Lista de tuplas con ID del estudiante y su promedio, ordenada de mayor a menor promedio.
+        list: Lista con los promedios ordenados de mayor a menor.   
     '''
 
-    data = listar_promedio(notas_estudiantes)
+    data = copy.deepcopy(promedios)
     # Algoritmo de burbuja
     n = len(data)
-    #print(data)
     for i in range(n):
         for j in range(0, n-i-1):
-            if data[j][1] < data[j+1][1]: # comparando promedios del 1 y el segundo elemento de la tupla en los elementos de promedio
-                data[j], data[j+1] = data[j+1], data[j] # intercambiar si el elemento encontrado es menor
+            if data[j] < data[j+1]: # comparando promedios del 1 y el segundo elemento de la tupla en los elementos de promedio
+                data[j], data[j+1] = data[j+1], data[j] # intercambiar si el elemento encontrado es menor   
     return data
 
-
-def ordenar_materias_seleccion(notas_estudiantes):
+def ordenar_estudiantes_burbuja(estudiantes, notas):
     '''
-    Ordena los estudiantes según la cantidad de cursos usando el algoritmo de selección.
+    Ordena los estudiantes según su promedio usando el algoritmo de burbuja.
     Parámetros:
-        notas_estudiantes (dict): Diccionario con las notas de los estudiantes.
+        estudiantes (list): Lista de IDs de estudiantes.
+        notas (list): Lista de listas con las notas de cada estudiante.
     Retorna:
-        list: Lista de tuplas con ID del estudiante y cantidad de cursos, ordenada de mayor a menor cantidad.
+        list: Lista de tuplas con ID del estudiante y su promedio, ordenada de mayor a menor promedio.                      
     '''
-    
-    data = listar_promedio(notas_estudiantes)
-    
-    # Algoritmo de selección
-    n = len(data)
+    promedios, _ = obtener_promedios_materias(notas)
+    promedios_ordenados = sort_bubble(promedios)
+    indices_ordenados = []
+    for promedio in promedios_ordenados:
+        index = promedios.index(promedio)
+        while index in indices_ordenados:
+            index = promedios.index(promedio, index + 1)
+        indices_ordenados.append(index) 
 
+    return [(estudiantes[i], promedios[i]) for i in indices_ordenados]  
+
+def ordenar_materias_seleccion(estudiantes, notas):
+    '''
+    Ordena los estudiantes según la cantidad de materias cursadas usando el algoritmo de selección.
+    Parámetros:
+        estudiantes (list): Lista de IDs de estudiantes.
+        notas (list): Lista de listas con las notas de cada estudiante.
+    Retorna:
+        None: Imprime la lista de estudiantes ordenada por cantidad de materias cursadas.
+    '''
+    x , materias_cursadas = obtener_promedios_materias(notas)
+    n = len(materias_cursadas)
     for i in range(n):
         ind = i # índice del elemento 
         for j in range(i+1, n):
-            print("ciclo ",i,"Comparando:",data[ind], "y", data[j])
-            if data[j][2] > data[ind][2]:
+            #print("ciclo ",i,"Comparando:",materias_cursadas[ind], "y", materias_cursadas[j])
+            if materias_cursadas[j] > materias_cursadas[ind]:
                 ind = j
             #print("INTERCAMBIO:",data[i],"y",data[ind])
-        data[i], data[ind] = data[ind], data[i]
-        #print("Resultado parcial:",data)
-    
-    return data   
+        materias_cursadas[i], materias_cursadas[ind] = materias_cursadas[ind], materias_cursadas[i]
+    for i in range(n):
+        print(f"Estudiante ID: {estudiantes[i]}, Cantidad de cursos: {materias_cursadas[i]}")
+     
